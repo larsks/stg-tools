@@ -1,0 +1,4 @@
+#!/bin/sh
+
+stg list --noprefix |
+	fzf "$@" --preview 'git show -q --format="%B" $(stg id {})'

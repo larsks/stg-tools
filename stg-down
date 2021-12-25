@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+remote=$1
+branch=$2
+[[ $remote ]] || exit 1
+
+if ! [[ $branch ]]; then
+	branch=$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)
+fi
+
+git checkout $branch
+git fetch $remote $branch
+git reset --hard FETCH_HEAD
+git fetch $remote refs/heads/$branch.stgit:refs/stacks/$branch
+stg repair

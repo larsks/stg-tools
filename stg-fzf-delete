@@ -1,0 +1,3 @@
+#!/bin/sh
+
+stg-fzf-select -m | xargs -r stg-fzf-delete

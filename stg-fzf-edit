@@ -1,0 +1,3 @@
+#!/bin/sh
+
+stg-fzf-select | xargs -r stg edit

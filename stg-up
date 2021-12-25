@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+while getopts fF ch; do
+	case  $ch in
+	(f)	push_args+=(--force-with-lease)
+		;;
+	(F)	push_args+=(--force)
+		;;
+	(\?)	exit 2
+		;;
+	esac
+done
+shift $(( OPTIND - 1 ))
+
+remote=$1
+[[ "$remote" ]] || exit 1
+
+branch=$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)
+
+git push "${push_args[@]}" $remote $branch
+git push "${push_args[@]}" $remote refs/stacks/$branch:refs/heads/$branch.stgit
